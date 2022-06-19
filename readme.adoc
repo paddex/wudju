@@ -1,0 +1,10 @@
+= Wudju - New Tab-Page for your Terminal
+
+Get a beautifully formatted minimalistic new tab page with a greeting, 
+date and time, inspirational quotes, your personal tasks and to-do 
+(Todo.txt-support) list everytime you open the terminal.
+
+Heavily inspired by https://github.com/NayamAmarshe/please
+
+More Info coming soon...
+
