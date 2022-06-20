@@ -31,7 +31,7 @@ class Config:
     if config_home == None:
       config_home = os.path.join(os.getenv("HOME"), ".config")
 
-    config_path = os.path.join(config_home, "greeter")
+    config_path = os.path.join(config_home, "wudju")
 
     if not os.path.exists(config_path):
       os.makedirs(config_path)
@@ -57,7 +57,11 @@ class Config:
       "styles": {
         "greeting"      : "yellow",
         "quote"         : "blue",
-        "quote_author"  : "red"
+        "quote_author"  : "red",
+        "todo_table"    : "white",
+        "todo_open"     : "blue",
+        "todo_urgent"   : "red",
+        "todo_done"     : "green"
       },
       "quote_file"  : "",
       "todo_file"   : "",

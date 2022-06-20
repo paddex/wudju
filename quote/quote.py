@@ -15,6 +15,6 @@ class Quote:
   def get_random_quote(self):
     size = len(self.quotes)
     if size < 1:
-      return { "quote": "There are no quotes", "author": "greeter", "origin": ""}
+      return { "quote": "There are no quotes", "author": "wudju", "origin": ""}
     i = random.randint(0, size - 1)
     return self.quotes[i]

@@ -121,13 +121,13 @@ def get_quote(quote_location) -> dict:
   except FileNotFoundError:
     quote = {
         "quote": "Error: Quote file could not be found.",
-        "author": "greeter.py",
+        "author": "wudju.py",
         "origin": "-"
     }
   except json.JSONDecodeError:
     quote = {
         "quote": "Error: Quote file could not be parsed.",
-        "author": "greeter.py",
+        "author": "wudju.py",
         "origin": "-"
     }
 
