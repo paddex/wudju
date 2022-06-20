@@ -12,9 +12,20 @@ from rich.align import Align
 from rich.rule import Rule
 from rich.table import Table
 
-from config.config import Config
+
 from quote.quote import Quote
 from todotxt.todotxt import ToDoTxt
+
+try:
+  from config import config as cfg_module
+except json.JSONDecodeError as err:
+  print(err.msg)
+  print("It seems like something went wrong while parsing the config.")
+  confirm = confirm_prompt("Would you like to reset your config?")
+  if confirm:
+    cfg_module.reset_config()
+  else:
+    exit(1) 
 
 console = Console()
 
@@ -158,18 +169,8 @@ def confirm_prompt(msg: str, default: str = "yes") -> bool:
       sys.stdout.print("Please responsd with 'yes' or 'no'")
 
 def main():
-  try:
-    config_obj = Config()
-  except json.JSONDecodeError as err:
-    print(err.msg)
-    print("It seems like something went wrong while parsing the config.")
-    confirm = confirm_prompt("Would you like to reset your config?")
-    if confirm:
-      config_obj = Config(reset=True)
-    else:
-      exit(1) 
 
-  config = config_obj.get_config()
+  config = cfg_module.config
 
   show(config)
 
