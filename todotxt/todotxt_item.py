@@ -14,3 +14,24 @@ class ToDoItem:
     self.text = text
     self.context = context
     self.projects = projects
+
+  def get_string(self):
+    line = ""
+    if self.completed:
+      line = line + "x "
+
+    if self.priority is not None:
+      line = line + self.priority + " "
+
+    if self.finish_date is not None:
+      line = line + self.finish_date.strftime("%Y-%m-%d ")
+
+    if self.start_date is not None:
+      line = line + self.start_date.strftime("%Y-%m-%d ")
+
+    if self.text is not None:
+      line = line + self.text
+
+    return line
+      
+

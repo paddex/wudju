@@ -26,6 +26,10 @@ class ToDoTxt:
     if not filter:
       return self.todos
 
+  def out(self):
+    for todo in self.todos:
+      print(todo.get_string())
+
   def parse(self, lines) -> list:
     todos = []
     i = 0
