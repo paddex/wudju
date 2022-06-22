@@ -9,17 +9,35 @@
     "cyan": "#87C095",
     "white": "#D8CAAC"
   },
-  "styles": {
-    "greeting": "yellow",
-    "quote": "blue",
-    "quote_author": "red",
-		"todo_table": "white",
-		"todo_table_header": "cyan",
-		"todo_open": "blue",
-		"todo_urgent": "red",
-		"todo_done": "green"
-  },
-  "quote_file": "/home/paddex/projects/python/greeter/quotes.json",
-  "todo_file": "/home/paddex/projects/python/greeter/todo.txt",
-  "user": "paddex"
+	"greeting": {
+		"enable": "true",
+		"name": "paddex",
+		"styles": {
+			"greeting": "yellow"
+		}
+	},
+	"quote": {
+		"enable": "true",
+		"file": "/home/paddex/projects/python/wudju/quotes.json",
+		"styles": {
+			"quote": "blue",
+			"author": "red",
+			"origin": "red"
+		}
+	},
+	"todo": {
+		"enable": "true",
+		"file": "/home/paddex/projects/python/wudju/todo.txt",
+		"hide_projects": "true",
+		"hide_context": "true",
+		"insert_date_on_add": "true",
+		"insert_date_on_complete": "true",
+		"styles": {
+			"table": "white",
+			"table_header": "cyan",
+			"todo_open": "blue",
+			"todo_urgent": "red",
+			"todo_done": "green"
+		}
+	}
 }

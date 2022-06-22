@@ -11,23 +11,38 @@ def first_time_setup():
       "blue"    : "#89BEBA",
       "magenta" : "#D3A0BC",
       "cyan"    : "#87C095",
-      "white"   : "#D8CAAC"
+      "white"   : "#D8CAAC",
     },
     "greeting": {
-      "enabled": "true"
+      "enabled": "true",
+      "name": "",
+      "styles": {
+        "greeting": "yellow",
+      },
     },
-    "styles": {
-      "greeting"      : "yellow",
-      "quote"         : "blue",
-      "quote_author"  : "red",
-      "todo_table"    : "white",
-      "todo_open"     : "blue",
-      "todo_urgent"   : "red",
-      "todo_done"     : "green"
+    "quote": {
+      "enable": "true",
+        "file": "",
+        "styles": {
+          "quote": "blue",
+          "author": "red",
+          "origin": "red",
+        },
     },
-    "quote_file"  : "",
-    "todo_file"   : "",
-    "user"        : ""
+    "todo": {
+      "enable": "true",
+      "file": "",
+      "hide_projects": "true",
+      "hide_context": "true",
+      "insert_date_on_add": "true",
+      "styles": {
+        "table": "white",
+        "table_header": "cyan",
+        "todo_open": "blue",
+        "todo_urgent": "red",
+        "todo_done": "green",
+      },
+    },
   }
 
   print("Hello! How may I call you? ")
@@ -36,7 +51,7 @@ def first_time_setup():
   quote_location = input()
   print(f"Lastly, please tell me where I can find your todo.txt file.")
   todo_location = input()
-  config["user"] = name
+  config["greeter"][""] = name
   config["quote_file"] = quote_location
   config["todo_file"] = todo_location
 
