@@ -65,6 +65,31 @@ class ToDoTxt:
     self.sort_todos()
     self.write_to_file()
 
+  def show_by_priorities(self, priorities: list[str] = []):
+    if len(priorities) <= 0:
+      showlist = self.filter_todos(by_has_prio = True)
+    else:
+      showlist = self.filter_todos(by_prio = priorities)
+
+    for todo in showlist:
+      print(str(todo.id) + ": " + todo.line)
+
+  def show_projects(self, terms: list[str] = []):
+    todos = self.todos.copy()
+    if len(terms) > 0:
+      todos = self.filter_todos(by_terms = terms)
+
+    projects = []
+    for todo in todos:
+      if todo.projects is not None:
+        for proj in todo.projects:
+          if proj not in projects:
+            projects.append(proj)
+
+    for proj in projects:
+      print(proj)
+    
+
   def get_todos(self, filter_by: list[str] = None) -> list[ToDoItem]:
     if not filter_by:
       return self.todos
@@ -78,16 +103,12 @@ class ToDoTxt:
 
   def show(
       self,
-      filter_by_terms: list[str] = None,
-      filter_by_prio: list[str] = None,
-      filter_by_context: list[str] = None,
-      filter_by_projects: list[str] = None
+      by_terms: list[str] = [],
+      by_prio: list[str] = [],
+      by_context: list[str] = [],
+      by_projects: list[str] = [],
   ) -> list[ToDoItem]:
-    showlist = self.filter_todos(
-        filter_by_terms,
-        filter_by_prio,
-        filter_by_context,
-        filter_by_projects)
+    showlist = self.filter_todos( by_terms, by_prio, by_context, by_projects)
 
     for todo in showlist:
       print(str(todo.id) + ": " + todo.line)
@@ -97,13 +118,15 @@ class ToDoTxt:
 
   def filter_todos(
       self,
-      filter_by_terms: list[str] = None,
-      filter_by_prio: list[str] = None,
-      filter_by_context: list[str] = None,
-      filter_by_projects: list[str] = None
+      by_terms: list[str] = [],
+      by_prio: list[str] = [],
+      by_context: list[str] = [],
+      by_projects: list[str] = [],
+      by_has_prio: bool = False
   ) -> list[ToDoItem]:
     filtered_list = self.todos.copy()
-    for word in filter_by_terms:
+
+    for word in by_terms:
       if "|" in word:
         words = word.split("|")
         filtered_list = list(filter(
@@ -117,19 +140,31 @@ class ToDoTxt:
         filtered_list = list(filter(
           lambda todo: word in todo.line, filtered_list))
 
-    filtered_list = list(
-      filter( lambda todo: len(
-      [prio for prio in filter_by_prio if prio == todo.priority]) > 0,
-      filtered_list)
-    )
+    if len(by_prio) > 0:
+      filtered_list = list(
+        filter( lambda todo: len(
+        [prio for prio in by_prio if prio == todo.priority]) > 0,
+        filtered_list)
+      )
 
-    for cxt in filter_by_context:
-      filtered_list = list(filter(
-        lambda todo: cxt in todo.context, filtered_list))
+    if len(by_context) > 0:
+      filtered_list = list(
+        filter( lambda todo: len(
+        [cxt for cxt in by_context if cxt in todo.context]) > 0,
+        filtered_list)
+      )
 
-    for proj in filter_by_projects:
-      filtered_list = list(filter(
-        lambda todo: proj in todo.projects, filtered_list))
+    if len(by_projects) > 0:
+      filtered_list = list(
+        filter( lambda todo: len(
+        [proj for proj in by_projects if proj in todo.projects]) > 0,
+        filtered_list)
+      )
+
+    if by_has_prio:
+      filtered_list = list(
+        filter( lambda todo: todo.priority is not None, filtered_list)
+      )
 
     return filtered_list
 

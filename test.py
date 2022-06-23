@@ -34,20 +34,28 @@ def undo(id: int):
 @wudju.command()
 def list(
     terms: Optional[List[str]] = typer.Argument(None),
-    prio: Optional[List[str]] = typer.Option(None),
-    context: Optional[List[str]] = typer.Option(None),
-    projects: Optional[List[str]] = typer.Option(None)
+    prio: Optional[List[str]] = typer.Option([]),
+    context: Optional[List[str]] = typer.Option([]),
+    project: Optional[List[str]] = typer.Option([])
 ):
-  todo.show(terms, prio, context, projects)
+  todo.show(terms, prio, context, project)
 
 @wudju.command()
 def ls(
     args: Optional[List[str]] = typer.Argument(None),
     prio: Optional[List[str]] = typer.Option(None),
     context: Optional[List[str]] = typer.Option(None),
-    projects: Optional[List[str]] = typer.Option(None)
+    project: Optional[List[str]] = typer.Option(None)
 ):
-  list(args, prio, context, projects)
+  list(args, prio, context, project)
+
+@wudju.command()
+def listpri(priorities: Optional[List[str]] = typer.Argument(None)):
+  todo.show_by_priorities(priorities)
+
+@wudju.command()
+def listproj(terms: Optional[List[str]] = typer.Argument(None)):
+  todo.show_projects(terms)
 
 @wudju.command()
 def reset():
