@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import shutil
+import re
 
 from typing import Optional, List
 
@@ -13,7 +14,7 @@ wudju = typer.Typer()
 @wudju.callback()
 def load_todos():
   global todo
-  todo = ToDoTxt("/home/paddex/projects/python/wudju/todo_test.txt")
+  todo = ToDoTxt()
 
 @wudju.command()
 def add(todo_str: str):
@@ -32,6 +33,19 @@ def undo(id: int):
   todo.undo_todo(id)
 
 @wudju.command()
+def edit(id: int, new_line: str):
+  todo.edit_todo(id - 1, new_line)
+
+@wudju.command()
+def pri(id: int, priority: str = typer.Argument(None)):
+  if priority is not None:
+    pri = re.compile("^[A-Z]$")
+    if pri.fullmatch(priority) is None:
+      typer.echo("Not a valid priority. Must be between A and Z.")
+      raise typer.Exit(1)
+  todo.set_priority(id, priority)
+
+@wudju.command()
 def list(
     terms: Optional[List[str]] = typer.Argument(None),
     prio: Optional[List[str]] = typer.Option([]),
@@ -42,12 +56,21 @@ def list(
 
 @wudju.command()
 def ls(
-    args: Optional[List[str]] = typer.Argument(None),
-    prio: Optional[List[str]] = typer.Option(None),
-    context: Optional[List[str]] = typer.Option(None),
-    project: Optional[List[str]] = typer.Option(None)
+    terms: Optional[List[str]] = typer.Argument(None),
+    prio: Optional[List[str]] = typer.Option([]),
+    context: Optional[List[str]] = typer.Option([]),
+    project: Optional[List[str]] = typer.Option([])
 ):
-  list(args, prio, context, project)
+  list(terms, prio, context, project)
+
+@wudju.command()
+def listall(
+    terms: Optional[List[str]] = typer.Argument(None),
+    prio: Optional[List[str]] = typer.Option([]),
+    context: Optional[List[str]] = typer.Option([]),
+    project: Optional[List[str]] = typer.Option([])
+):
+  todo.show_all(terms, prio, context, project)
 
 @wudju.command()
 def listpri(priorities: Optional[List[str]] = typer.Argument(None)):
@@ -58,9 +81,17 @@ def listproj(terms: Optional[List[str]] = typer.Argument(None)):
   todo.show_projects(terms)
 
 @wudju.command()
+def listcon(terms: Optional[List[str]] = typer.Argument(None)):
+  todo.show_context(terms)
+
+@wudju.command()
+def archive():
+  todo.archive()
+
+@wudju.command()
 def reset():
-  org_path = "/home/paddex/projects/python/wudju/todo.txt"
-  new_path = "/home/paddex/projects/python/wudju/todo_test.txt"
+  org_path = "/home/paddex/projects/python/wudju/todo_bak.txt"
+  new_path = "/home/paddex/projects/python/wudju/todo.txt"
   shutil.copy(org_path, new_path)
 
 if __name__ == "__main__":

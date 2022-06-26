@@ -1,0 +1,3 @@
+x 2022-06-16 2022-06-15 Mache den Haushalt @Pflichten +Hausarbeit
+x Mache dich schlau über node.js/Express @Freizeit +ToDoApp
+x Schicke die Kinder zum Fussball
