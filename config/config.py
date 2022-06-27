@@ -1,6 +1,7 @@
 import os
 import json
 
+
 def first_time_setup():
   config = {
     "colors": {
@@ -59,9 +60,11 @@ def first_time_setup():
 
   return config
 
+  
 def write_config():
   with open(get_config_path(), "w") as config_file:
     config_file.write(json.dumps(config, indent=2))
+
 
 def get_config_path():
   config_home = get_xdg_config_home()
@@ -75,16 +78,42 @@ def get_config_path():
 
   return os.path.join(config_path, "config.json")
 
+
 def get_xdg_config_home():
   xdg_config_home = os.getenv("XDG_CONFIG_HOME")
   return xdg_config_home
+
 
 def reset_config():
   if os.path.exists(config_path):
     os.remove(config_path)
   global config
   config = first_time_setup()
-  
+
+
+def confirm_prompt(msg: str, default: str = "yes") -> bool:
+
+  valid = {"yes": True, "ye": True, "y": True, "no": False, "n": False}
+
+  if default is None:
+    prompt = " [y/n]: "
+  elif default == "yes":
+    prompt = " [Y/n]: "
+  elif default == "no":
+    prompt = " [y/N]: "
+  else:
+    raise ValueError("invalid default value: '%s'" % default)
+
+  while True:
+    print(msg + prompt)
+    inp = input().lower()
+
+    if default is not None and inp == "":
+      return valid[default]
+    elif inp in valid:
+      return valid[inp]
+    else:
+      print("Please responsd with 'yes' or 'no'")
 
 
 config_path = get_config_path()
@@ -96,6 +125,10 @@ else:
     with open(config_path) as cf:
       config = json.load(cf)
   except json.JSONDecodeError as error:
-    raise error
+    confirm = confirm_prompt("Would you like to reset your config?")
+    if confirm:
+      reset_config()
+    else:
+      exit(1)
 
 

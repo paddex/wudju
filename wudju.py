@@ -11,23 +11,17 @@ from rich.console import Console
 from rich.align import Align
 from rich.rule import Rule
 from rich.table import Table
+from rich.prompt import Confirm
 
+import typer
+
+from config.config import config 
 
 from quote.quote import Quote
 from todotxt.todotxt import ToDoTxt
 
-try:
-  from config import config as cfg_module
-except json.JSONDecodeError as err:
-  print(err.msg)
-  print("It seems like something went wrong while parsing the config.")
-  confirm = confirm_prompt("Would you like to reset your config?")
-  if confirm:
-    cfg_module.reset_config()
-  else:
-    exit(1) 
-
 console = Console()
+wudju = typer.Typer()
 
 def show(config):
   print_greeting(config)
@@ -143,30 +137,6 @@ def get_quote(quote_location) -> dict:
     }
 
   return quote
-
-def confirm_prompt(msg: str, default: str = "yes") -> bool:
-
-  valid = {"yes": True, "ye": True, "y": True, "no": False, "n": False}
-
-  if default is None:
-    prompt = " [y/n]: "
-  elif default == "yes":
-    prompt = " [Y/n]: "
-  elif default == "no":
-    prompt = " [y/N]: "
-  else:
-    raise ValueError("invalid default value: '%s'" % default)
-
-  while True:
-    sys.stdout.write(msg + prompt)
-    inp = input().lower()
-
-    if default is not None and inp == "":
-      return valid[default]
-    elif inp in valid:
-      return valid[inp]
-    else:
-      sys.stdout.print("Please responsd with 'yes' or 'no'")
 
 def main():
 
