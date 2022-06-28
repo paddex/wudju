@@ -32,10 +32,11 @@ def first_time_setup():
     },
     "todo": {
       "enable": "true",
-      "file": "",
+      "dir": "",
       "hide_projects": "true",
       "hide_context": "true",
       "insert_date_on_add": "true",
+      "insert_date_on_complete": "true",
       "styles": {
         "table": "white",
         "table_header": "cyan",
@@ -52,16 +53,16 @@ def first_time_setup():
   quote_location = input()
   print(f"Lastly, please tell me where I can find your todo.txt file.")
   todo_location = input()
-  config["greeter"][""] = name
-  config["quote_file"] = quote_location
-  config["todo_file"] = todo_location
+  config["greeting"]["name"] = name
+  config["quote"]["file"] = quote_location
+  config["todo"]["dir"] = todo_location
 
-  write_config()
+  write_config(config)
 
   return config
 
   
-def write_config():
+def write_config(config):
   with open(get_config_path(), "w") as config_file:
     config_file.write(json.dumps(config, indent=2))
 
