@@ -1,5 +1,5 @@
 from datetime import date
-from config.config import config
+from ..config.config import config
 
 class ToDoItem:
 

@@ -4,7 +4,7 @@ import re
 from datetime import datetime
 
 from .todotxt_item import ToDoItem
-from config.config import config
+from ..config.config import config
 
 class ToDoTxt:
 

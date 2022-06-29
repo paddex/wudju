@@ -15,11 +15,11 @@ from typing import Optional, List
 
 import typer
 
-from config.config import config 
+from .config.config import config 
 
-from quote.quote import Quote
-from todotxt.todotxt import ToDoTxt
-from todotxt.todotxt_item import ToDoItem
+from .quote.quote import Quote
+from .todotxt.todotxt import ToDoTxt
+from .todotxt.todotxt_item import ToDoItem
 
 console = Console()
 wudju = typer.Typer(help="A beautiful terminal start page and todotxt tool.")
