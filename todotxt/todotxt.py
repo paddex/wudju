@@ -86,6 +86,15 @@ class ToDoTxt:
       print(str(todo.id) + ": " + todo.line)
 
 
+  def get_by_priorities(self, priorities: list[str] = []) -> None:
+    if len(priorities) <= 0:
+      todolist = self.filter_todos(self.todos, by_has_prio = True)
+    else:
+      todolist = self.filter_todos(self.todos, by_prio = priorities)
+
+    return todolist
+
+
   def show_projects(self, terms: list[str] = []) -> None:
     projects = self.get_projects(terms)
 
@@ -130,9 +139,15 @@ class ToDoTxt:
     return context
 
 
-  def get_todos(self, filter_by: list[str] = None) -> list[ToDoItem]:
-    if not filter_by:
-      return self.todos
+  def get_todos(
+      self,
+      by_terms: list[str] = [],
+      by_prio: list[str] = [],
+      by_context: list[str] = [],
+      by_projects: list[str] = []
+  ) -> list[ToDoItem]:
+    todos = self.todos.copy()
+    return self.filter_todos(todos, by_terms, by_prio, by_context, by_projects)
 
 
   def get_all_todos(

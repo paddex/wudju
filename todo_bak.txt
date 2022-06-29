@@ -1,9 +1,0 @@
-(A) 2022-06-15 Schreibe todo.txt parser @Freizeit +ToDoApp
-(A) Erstelle node.js/express API um ToDos abzurufen @Freizeit +ToDoApp
-(B) 2022-06-15 Baue Übersicht für Einsender und Scheine anhand der Datenbank des komservs @Arbeit +Scheinübersicht
-(C) 2022-06-15 Fülle Erklärung zur Feststellung des Grundsteuerwerts aus due:2022-09-15 @Pflichten +Grundsteuerwert
-2022-06-15 Gehe mit den Hunden @Freizeit @Pflichten +Hunde
-2022-06-26 Testline
-x 2022-06-16 2022-06-15 Mache den Haushalt @Pflichten +Hausarbeit
-x Mache dich schlau über node.js/Express @Freizeit +ToDoApp
-x Schicke die Kinder zum Fussball
