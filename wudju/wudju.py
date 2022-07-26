@@ -41,7 +41,9 @@ def show(
     col_context: bool = typer.Option(False, "--context", "-c",
       help="Shows context column"),
     col_projects: bool = typer.Option(False, "--projects",
-      help="Shows projects column")
+      help="Shows projects column"),
+    show_all: bool = typer.Option(False, "--all", "-a",
+      help="Shows all columns")
 ) -> None:
 
   global todo 
@@ -51,21 +53,21 @@ def show(
     return
 
   columns = []
-  if col_id:
+  if col_id or show_all:
     columns.append("id")
-  if col_pri:
+  if col_pri or show_all:
     columns.append("priority")
-  if col_task:
+  if col_task or show_all:
     columns.append("task")
-  if col_status:
+  if col_status or show_all:
     columns.append("status")
-  if col_finish_date:
+  if col_finish_date or show_all:
     columns.append("finish_date")
-  if col_start_date:
+  if col_start_date or show_all:
     columns.append("start_date")
-  if col_context:
+  if col_context or show_all:
     columns.append("context")
-  if col_projects:
+  if col_projects or show_all:
     columns.append("projects")
 
   print_greeting()
@@ -100,26 +102,28 @@ def list_todo(
     col_context: bool = typer.Option(False, "--show-context", "-c",
       help="Shows context column"),
     col_projects: bool = typer.Option(False, "--show-projects",
-      help="Shows projects column")
+      help="Shows projects column"),
+    show_all: bool = typer.Option(False, "--all", "-a",
+      help="Shows all columns")
 ) -> None:
   """ Lists all items (or a filtered selection) in the todo.txt file """
 
   columns = []
-  if col_id:
+  if col_id or show_all:
     columns.append("id")
-  if col_pri:
+  if col_pri or show_all:
     columns.append("priority")
-  if col_task:
+  if col_task or show_all:
     columns.append("task")
-  if col_status:
+  if col_status or show_all:
     columns.append("status")
-  if col_finish_date:
+  if col_finish_date or show_all:
     columns.append("finish_date")
-  if col_start_date:
+  if col_start_date or show_all:
     columns.append("start_date")
-  if col_context:
+  if col_context or show_all:
     columns.append("context")
-  if col_projects:
+  if col_projects or show_all:
     columns.append("projects")
 
   todos = todo.get_todos(terms, prio, context, projects)
@@ -189,23 +193,25 @@ def listall(
     col_context: bool = typer.Option(False, "--show-context", "-c",
       help="Shows context column"),
     col_projects: bool = typer.Option(False, "--show-projects",
-      help="Shows projects column")
+      help="Shows projects column"),
+    show_all: bool = typer.Option(False, "--all", "-a",
+      help="Shows all columns")
 ) -> None:
   """Lists all todos from todo.txt and done.txt"""
   columns = []
-  if col_pri:
+  if col_pri or show_all:
     columns.append("priority")
-  if col_task:
+  if col_task or show_all:
     columns.append("task")
-  if col_status:
+  if col_status or show_all:
     columns.append("status")
-  if col_finish_date:
+  if col_finish_date or show_all:
     columns.append("finish_date")
-  if col_start_date:
+  if col_start_date or show_all:
     columns.append("start_date")
-  if col_context:
+  if col_context or show_all:
     columns.append("context")
-  if col_projects:
+  if col_projects or show_all:
     columns.append("projects")
 
   todos = todo.get_all_todos(terms, prio, context, projects)
@@ -230,25 +236,27 @@ def listpri(
     col_context: bool = typer.Option(False, "--show-context", "-c",
       help="Shows context column"),
     col_projects: bool = typer.Option(False, "--show-projects",
-      help="Shows projects column")
+      help="Shows projects column"),
+    show_all: bool = typer.Option(False, "--all", "-a",
+      help="Shows all columns")
 )-> None:
   """List all todos with the chosen priority(ies)"""
   columns = []
-  if col_id:
+  if col_id or show_all:
     columns.append("id")
-  if col_pri:
+  if col_pri or show_all:
     columns.append("priority")
-  if col_task:
+  if col_task or show_all:
     columns.append("task")
-  if col_status:
+  if col_status or show_all:
     columns.append("status")
-  if col_finish_date:
+  if col_finish_date or show_all:
     columns.append("finish_date")
-  if col_start_date:
+  if col_start_date or show_all:
     columns.append("start_date")
-  if col_context:
+  if col_context or show_all:
     columns.append("context")
-  if col_projects:
+  if col_projects or show_all:
     columns.append("projects")
 
   todos = todo.get_by_priorities(priorities)

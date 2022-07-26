@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wudju"
-version = "0.1.0"
+version = "0.1.1"
 description = "A beautiful, minimalistic new tab page for your terminal. It includes a greeting, date and time, inspirational quotes and your current tasks (ToDo.txt-Support)."
 authors = ["paddex <paddex@paddex.net>"]
 license = "MIT"
