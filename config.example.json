@@ -7,37 +7,51 @@
     "blue": "#89BEBA",
     "magenta": "#D3A0BC",
     "cyan": "#87C095",
-    "white": "#D8CAAC"
+    "white": "#D8CAAC",
+		"fg_light": "#fffacd",
+		"fg_dark": "#2B3239"
   },
-	"greeting": {
-		"enable": "true",
-		"name": "paddex",
-		"styles": {
-			"greeting": "yellow"
-		}
-	},
-	"quote": {
-		"enable": "true",
-		"file": "/home/paddex/projects/python/wudju/quotes.json",
-		"styles": {
-			"quote": "blue",
-			"author": "red",
-			"origin": "red"
-		}
-	},
-	"todo": {
-		"enable": "true",
-		"file": "/home/paddex/projects/python/wudju/todo.txt",
-		"hide_projects": "true",
-		"hide_context": "true",
-		"insert_date_on_add": "true",
-		"insert_date_on_complete": "true",
-		"styles": {
-			"table": "white",
-			"table_header": "cyan",
-			"todo_open": "blue",
-			"todo_urgent": "red",
-			"todo_done": "green"
-		}
-	}
+  "greeting": {
+    "enabled": "true",
+    "name": "yourname",
+    "styles": {
+      "greeting": "yellow"
+    }
+  },
+  "quote": {
+    "enable": "true",
+    "file": "/home/yourname/Documents/quotes/quotes_starwars.json",
+    "styles": {
+      "quote": "blue",
+      "author": "red",
+      "origin": "red"
+    }
+  },
+  "todo": {
+    "enable": "true",
+    "dir": "/home/yourname/.todo",
+    "hide_projects": "true",
+    "hide_context": "true",
+    "insert_date_on_add": "true",
+    "insert_date_on_complete": "true",
+    "styles": {
+      "table_border": "white",
+      "table_header": "cyan",
+      "table_todo_open": "blue",
+      "table_todo_urgent": "red",
+      "table_todo_done": "green",
+			"cmd_add_bg": "blue",
+			"cmd_add_fg": "fg_dark",
+			"cmd_rm_bg": "blue",
+			"cmd_rm_fg": "fg_dark",
+			"cmd_do_bg": "green",
+			"cmd_do_fg": "fg_dark",
+			"cmd_undo_bg": "green",
+			"cmd_undo_fg": "fg_dark",
+			"cmd_archive_bg": "green",
+			"cmd_archive_fg": "fg_dark",
+			"cmd_pri_bg": "green",
+			"cmd_pri_fg": "fg_dark"
+    }
+  }
 }

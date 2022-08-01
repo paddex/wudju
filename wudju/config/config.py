@@ -13,6 +13,8 @@ def first_time_setup():
       "magenta" : "#D3A0BC",
       "cyan"    : "#87C095",
       "white"   : "#D8CAAC",
+      "fg_light": "#fffacd",
+      "fg_dark" : "#2B3239"
     },
     "greeting": {
       "enabled": "true",
@@ -38,11 +40,23 @@ def first_time_setup():
       "insert_date_on_add": "true",
       "insert_date_on_complete": "true",
       "styles": {
-        "table": "white",
+        "table_border": "white",
         "table_header": "cyan",
-        "todo_open": "blue",
-        "todo_urgent": "red",
-        "todo_done": "green",
+        "table_todo_open": "blue",
+        "table_todo_urgent": "red",
+        "table_todo_done": "green",
+        "cmd_add_bg": "blue",
+        "cmd_add_fg": "fg_dark",
+        "cmd_rm_bg": "blue",
+        "cmd_rm_fg": "fg_dark",
+        "cmd_do_bg": "green",
+        "cmd_do_fg": "fg_dark",
+        "cmd_undo_bg": "green",
+        "cmd_undo_fg": "fg_dark",
+        "cmd_archive_bg": "green",
+        "cmd_archive_fg": "fg_dark",
+        "cmd_pri_bg": "green",
+        "cmd_pri_fg": "fg_dark"
       },
     },
   }

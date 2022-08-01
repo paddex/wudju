@@ -21,7 +21,7 @@ class ToDoTxt:
     self.todos = self.parse_file(self.location)
 
 
-  def add_todo(self, line: str) -> None:
+  def add_todo(self, line: str) -> ToDoItem:
     id = len(self.todos) + 1
     todo_item = self.parse_line(line, id)
     if config["todo"]["insert_date_on_add"]:
@@ -29,12 +29,16 @@ class ToDoTxt:
         todo_item.start_date = datetime.today()
     self.todos.append(todo_item)
     self.todos = self.sort_todos(self.todos)
+    self.todos = self.reindex_todos(self.todos)
     self.write_to_file()
+
+    return todo_item
 
 
   def delete_todo(self, id: int) -> None:
     todo = self.get_todo_by_id(id)
     self.todos.remove(todo)
+    self.todos = self.reindex_todos(self.todos)
     self.write_to_file()
 
 
@@ -48,6 +52,7 @@ class ToDoTxt:
       if todo.start_date is not None:
         todo.finish_date = datetime.today()
     self.todos = self.sort_todos(self.todos)
+    self.todos = self.reindex_todos(self.todos)
     self.write_to_file()
 
 
@@ -59,6 +64,7 @@ class ToDoTxt:
     if todo.finish_date is not None:
       todo.finish_date = None
     self.todos = self.sort_todos(self.todos)
+    self.todos = self.reindex_todos(self.todos)
     self.write_to_file()
 
 
@@ -66,6 +72,7 @@ class ToDoTxt:
     todo_item = self.parse_line(new_line, id)
     self.todos[id] = todo_item
     self.todos = self.sort_todos(self.todos)
+    self.todos = self.reindex_todos(self.todos)
     self.write_to_file()
 
 
@@ -73,6 +80,7 @@ class ToDoTxt:
     todo_item = self.get_todo_by_id(id)
     todo_item.priority = priority
     self.todos = self.sort_todos(self.todos)
+    self.todos = self.reindex_todos(self.todos)
     self.write_to_file()
 
 
@@ -225,6 +233,13 @@ class ToDoTxt:
 
   def sort_todos(self, todos: list[ToDoItem]) -> list[ToDoItem]:
     todos = sorted(todos, key=lambda todo: todo.line)
+    return todos
+
+
+  def reindex_todos(self, todos: list[ToDoItem]) -> list[ToDoItem]:
+    for i, todo in enumerate(todos):
+      todo.id = i + 1
+
     return todos
 
 

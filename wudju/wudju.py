@@ -126,6 +126,9 @@ def list_todo(
   if col_projects or show_all:
     columns.append("projects")
 
+  if terms == None:
+    terms = []
+
   todos = todo.get_todos(terms, prio, context, projects)
 
   print_todos(todos, columns)
@@ -134,13 +137,39 @@ def list_todo(
 @wudju.command()
 def add(todo_str: str) -> None:
   """ Adds a todo to the todo.txt file """
-  todo.add_todo(todo_str)
+  todo_item = todo.add_todo(todo_str)
+  todos = todo.get_todos()
+
+  fg_setting = config["todo"]["styles"]["cmd_add_fg"]
+  bg_setting = config["todo"]["styles"]["cmd_add_bg"]
+  fg = config["colors"][fg_setting]
+  bg = config["colors"][bg_setting]
+  msg = f"""
+  \n[{fg} on {bg}] [bold]Added[/bold] "{todo_item.text}" to your list[/]\n
+  """
+
+  console.print(msg, justify="center")
+  print_todos(todos, [])
+
 
 
 @wudju.command()
 def rm(id: int) -> None:
   """ Removes a todo from the todo.txt file """
+  todo_item = todo.get_todo_by_id(id)
   todo.delete_todo(id)
+  todos = todo.get_todos()
+
+  fg_setting = config["todo"]["styles"]["cmd_rm_fg"]
+  bg_setting = config["todo"]["styles"]["cmd_rm_bg"]
+  fg = config["colors"][fg_setting]
+  bg = config["colors"][bg_setting]
+  msg = f"""
+  \n[{fg} on {bg}] [bold]Removed[/bold] "{todo_item.text}" from your list[/]\n
+  """
+
+  console.print(msg, justify="center")
+  print_todos(todos, [])
 
 
 @wudju.command()
@@ -149,18 +178,54 @@ def do(id: int) -> None:
   Marks a todo as completed
   """
   todo.complete_todo(id)
+  todos = todo.get_todos()
+
+  fg_setting = config["todo"]["styles"]["cmd_do_fg"]
+  bg_setting = config["todo"]["styles"]["cmd_do_bg"]
+  fg = config["colors"][fg_setting]
+  bg = config["colors"][bg_setting]
+  msg = f"""
+  \n[{fg} on {bg}] [bold]Updated[/bold] your list[/]\n
+  """
+
+  console.print(msg, justify="center")
+  print_todos(todos, [])
 
 
 @wudju.command()
 def undo(id: int) -> None:
   """Marks a completed todo as not completed"""
   todo.undo_todo(id)
+  todos = todo.get_todos()
+
+  fg_setting = config["todo"]["styles"]["cmd_undo_fg"]
+  bg_setting = config["todo"]["styles"]["cmd_undo_bg"]
+  fg = config["colors"][fg_setting]
+  bg = config["colors"][bg_setting]
+  msg = f"""
+  \n[{fg} on {bg}] [bold]Updated[/bold] your list[/]\n
+  """
+
+  console.print(msg, justify="center")
+  print_todos(todos, [])
 
 
 @wudju.command()
 def edit(id: int, new_todo: str) -> None:
   """Replaces the chosen todo with the new one"""
   todo.edit_todo(id - 1, new_todo)
+  todos = todo.get_todos()
+
+  fg_setting = config["todo"]["styles"]["cmd_edit_fg"]
+  bg_setting = config["todo"]["styles"]["cmd_edit_bg"]
+  fg = config["colors"][fg_setting]
+  bg = config["colors"][bg_setting]
+  msg = f"""
+  \n[{fg} on {bg}] [bold]Updated[/bold] your list[/]\n
+  """
+
+  console.print(msg, justify="center")
+  print_todos(todos, [])
 
 
 @wudju.command()
@@ -172,6 +237,18 @@ def pri(id: int, priority: str = typer.Argument(None)) -> None:
       typer.echo("Not a valid priority. Must be between A and Z.")
       raise typer.Exit(1)
   todo.set_priority(id, priority)
+  todos = todo.get_todos()
+
+  fg_setting = config["todo"]["styles"]["cmd_pri_fg"]
+  bg_setting = config["todo"]["styles"]["cmd_pri_bg"]
+  fg = config["colors"][fg_setting]
+  bg = config["colors"][bg_setting]
+  msg = f"""
+  \n[{fg} on {bg}] [bold]Updated[/bold] your list[/]\n
+  """
+
+  console.print(msg, justify="center")
+  print_todos(todos, [])
 
 
 @wudju.command()
@@ -289,6 +366,18 @@ def listcon(terms: Optional[List[str]] = typer.Argument(None)) -> None:
 def archive() -> None:
   """Move all completed todos to done.txt"""
   todo.archive()
+  todos = todo.get_todos()
+
+  fg_setting = config["todo"]["styles"]["cmd_archive_fg"]
+  bg_setting = config["todo"]["styles"]["cmd_archive_bg"]
+  fg = config["colors"][fg_setting]
+  bg = config["colors"][bg_setting]
+  msg = f"""
+  \n[{fg} on {bg}] [bold]Updated[/bold] your list[/]\n
+  """
+
+  console.print(msg, justify="center")
+  print_todos(todos, [])
 
 
 def print_greeting() -> None:
@@ -324,14 +413,17 @@ def print_quote() -> None:
 
 def print_todos(todo_items: list[ToDoItem], cols: list[str]) -> None:
 
-  todo_open_setting = config["todo"]["styles"]["todo_open"]
+  todo_open_setting = config["todo"]["styles"]["table_todo_open"]
   todo_open_color = config["colors"][todo_open_setting]
 
-  todo_urgent_setting = config["todo"]["styles"]["todo_urgent"]
+  todo_urgent_setting = config["todo"]["styles"]["table_todo_urgent"]
   todo_urgent_color = config["colors"][todo_urgent_setting]
 
-  todo_done_setting = config["todo"]["styles"]["todo_done"]
+  todo_done_setting = config["todo"]["styles"]["table_todo_done"]
   todo_done_color = config["colors"][todo_done_setting]
+
+  if cols == []:
+    cols.extend(["id", "priority", "task", "status"])
 
   table = create_table(todo_items, cols)
 
@@ -387,7 +479,7 @@ def print_todos(todo_items: list[ToDoItem], cols: list[str]) -> None:
 
 
 def create_table(todos: list[ToDoItem], cols: list[str]) -> Table:
-  todo_table_setting = config["todo"]["styles"]["table"]
+  todo_table_setting = config["todo"]["styles"]["table_border"]
   todo_table_color = config["colors"][todo_table_setting]
 
   todo_table_header_setting = config["todo"]["styles"]["table_header"]
@@ -493,7 +585,7 @@ def create_table(todos: list[ToDoItem], cols: list[str]) -> Table:
 
   table = Table(
     *table_headers,
-    title = "Here are your Tasks:",
+    title = "ToDos:",
     title_style = todo_table_color,
     header_style = todo_table_header_color,
     style = todo_table_color,
@@ -512,7 +604,7 @@ def center_print(text: str, style: str = None, wrap: bool = False) -> None:
   if wrap:
     width = width // 2
 
-  console.print(Align.center(text, style=style, width=width, pad= False))
+  console.print(Align.center(text, style=style, width=width, pad=False))
 
 
 def get_quote(quote_location) -> dict:
